@@ -20,11 +20,17 @@ import javax.sql.DataSource;
  * Description:  该文件的描述
  */
 @Configuration
-@MapperScan(basePackages = "work.hdjava.mapper.dao.school",
-        sqlSessionFactoryRef="schoolSqlSessionFactory")
+@MapperScan(basePackages = SchoolMyBatisConfig.WORK_HDJAVA_MAPPER_DAO_SCHOOL,
+        sqlSessionFactoryRef= SchoolMyBatisConfig.SCHOOL_SQL_SESSION_FACTORY)
 public class SchoolMyBatisConfig {
+
+    public static final String WORK_HDJAVA_MAPPER_DAO_SCHOOL = "work.hdjava.mapper.dao.school";
+    public static final String SPRING_DATASOURCE_DRUID_DATASOURCE_1 = "spring.datasource.druid.datasource1";
+    public static final String CLASSPATH_MAPPER_SCHOOL_XML = "classpath:mapper/school/*.xml";
+    public static final String SCHOOL_SQL_SESSION_FACTORY = "schoolSqlSessionFactory";
+
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.druid.datasource1")
+    @ConfigurationProperties(prefix = SPRING_DATASOURCE_DRUID_DATASOURCE_1)
     public DataSource dataSource1() {
         // 底层会自动拿到spring.datasource中的配置， 创建一个DruidDataSource
         return DruidDataSourceBuilder.create().build();
@@ -39,7 +45,7 @@ public class SchoolMyBatisConfig {
         // 指定主库对应的mapper.xml文件
         sessionFactory.setMapperLocations(new
                 PathMatchingResourcePatternResolver()
-                .getResources("classpath:mapper/school/*.xml"));
+                .getResources(CLASSPATH_MAPPER_SCHOOL_XML));
         return sessionFactory.getObject();
     }
     @Bean

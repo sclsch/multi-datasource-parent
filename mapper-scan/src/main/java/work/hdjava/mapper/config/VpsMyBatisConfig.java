@@ -20,11 +20,17 @@ import javax.sql.DataSource;
  * Description:  该文件的描述
  */
 @Configuration
-@MapperScan(basePackages = "work.hdjava.mapper.dao.vps",
-        sqlSessionFactoryRef="vpsSqlSessionFactory")
+@MapperScan(basePackages = VpsMyBatisConfig.WORK_HDJAVA_MAPPER_DAO_VPS,
+        sqlSessionFactoryRef= VpsMyBatisConfig.VPS_SQL_SESSION_FACTORY)
 public class VpsMyBatisConfig {
+
+    public static final String WORK_HDJAVA_MAPPER_DAO_VPS = "work.hdjava.mapper.dao.vps";
+    public static final String VPS_SQL_SESSION_FACTORY = "vpsSqlSessionFactory";
+    public static final String SPRING_DATASOURCE_DRUID_DATASOURCE_2 = "spring.datasource.druid.datasource2";
+    public static final String CLASSPATH_MAPPER_VPS_XML = "classpath:mapper/vps/*.xml";
+
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.druid.datasource2")
+    @ConfigurationProperties(prefix = SPRING_DATASOURCE_DRUID_DATASOURCE_2)
     public DataSource dataSource2() {
         // 底层会自动拿到spring.datasource中的配置， 创建一个DruidDataSource
         return DruidDataSourceBuilder.create().build();
@@ -39,7 +45,7 @@ public class VpsMyBatisConfig {
         // 指定主库对应的mapper.xml文件
         sessionFactory.setMapperLocations(new
                 PathMatchingResourcePatternResolver()
-                .getResources("classpath:mapper/vps/*.xml"));
+                .getResources(CLASSPATH_MAPPER_VPS_XML));
         return sessionFactory.getObject();
     }
     @Bean

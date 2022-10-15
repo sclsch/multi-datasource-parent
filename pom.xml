@@ -5,6 +5,7 @@
     <modules>
         <module>dynamic-ds</module>
         <module>mapper-scan</module>
+        <module>dynamic-datasource</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

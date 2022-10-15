@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.hdjava.ds.dao.VpsDao">
+
+    <resultMap type="work.hdjava.ds.entity.Vps" id="VpsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="mem" column="mem" jdbcType="INTEGER"/>
+        <result property="vpsName" column="vps_name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="dataCenter" column="data_center" jdbcType="VARCHAR"/>
+        <result property="broadBand" column="broad_band" jdbcType="VARCHAR"/>
+        <result property="virtualTech" column="virtual_tech" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into vps(mem, vps_name, description, data_center, broad_band, virtual_tech)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.mem}, #{entity.vpsName}, #{entity.description}, #{entity.dataCenter}, #{entity.broadBand},
+            #{entity.virtualTech})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into vps(mem, vps_name, description, data_center, broad_band, virtual_tech)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.mem}, #{entity.vpsName}, #{entity.description}, #{entity.dataCenter}, #{entity.broadBand},
+            #{entity.virtualTech})
+        </foreach>
+        on duplicate key update
+        mem = values(mem) , vps_name = values(vps_name) , description = values(description) , data_center =
+        values(data_center) , broad_band = values(broad_band) , virtual_tech = values(virtual_tech)
+    </insert>
+    <select id="selectAll" resultType="work.hdjava.ds.entity.Vps">
+        select * from vps
+    </select>
+
+</mapper>
+

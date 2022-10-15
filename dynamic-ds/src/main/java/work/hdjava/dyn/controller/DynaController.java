@@ -2,6 +2,7 @@ package work.hdjava.dyn.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.http.ResponseEntity;
+import work.hdjava.dyn.annotation.DS;
 import work.hdjava.dyn.config.DynamicDataSource;
 import work.hdjava.dyn.dao.UniversityRankDao;
 import work.hdjava.dyn.dao.VpsDao;
@@ -42,16 +43,18 @@ public class DynaController {
      * @return 所有数据
      */
     @GetMapping(value = "/selectAllVps")
+    @DS("dataSource2")
     public ResponseEntity selectAllVps() {
-        DynamicDataSource.name.set("dataSource2");
+     //  DynamicDataSource.name.set("dataSource2");
      //   List<Vps> vps = vpsService.list();
         List<Vps> vps = vpsDao.selectAll();
         return ResponseEntity.ok(vps);
     }
 
     @GetMapping(value = "/selectAllRanks")
+    @DS("dataSource1")
     public ResponseEntity selectAllRanks() {
-        DynamicDataSource.name.set("dataSource");
+    //    DynamicDataSource.name.set("dataSource1");
         //TODO 出现sql语法错误，字段命名是关键字，怎么解决？
         //List<UniversityRank> universityRanks = universityRankService.list();
         List<UniversityRank> universityRanks = universityRankDao.selectAll();

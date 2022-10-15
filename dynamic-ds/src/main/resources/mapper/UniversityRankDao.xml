@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.hdjava.dyn.dao.UniversityRankDao">
+
+    <resultMap type="work.hdjava.dyn.entity.UniversityRank" id="UniversityRankMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="area" column="area" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="score" column="score" jdbcType="VARCHAR"/>
+        <result property="majar" column="majar" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="VARCHAR"/>
+        <result property="rank" column="rank" jdbcType="INTEGER"/>
+        <result property="school" column="school" jdbcType="VARCHAR"/>
+        <result property="opDate" column="op_date" jdbcType="TIMESTAMP"/>
+        <result property="extr1" column="extr1" jdbcType="VARCHAR"/>
+        <result property="extr2" column="extr2" jdbcType="VARCHAR"/>
+        <result property="extr3" column="extr3" jdbcType="VARCHAR"/>
+        <result property="extr4" column="extr4" jdbcType="VARCHAR"/>
+        <result property="extr5" column="extr5" jdbcType="VARCHAR"/>
+        <result property="extr6" column="extr6" jdbcType="VARCHAR"/>
+        <result property="extr7" column="extr7" jdbcType="VARCHAR"/>
+        <result property="extr8" column="extr8" jdbcType="VARCHAR"/>
+        <result property="extr9" column="extr9" jdbcType="VARCHAR"/>
+        <result property="extr10" column="extr10" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into university_rank(`area`, `type`, score, majar, `year`, rank, school, op_date, extr1, extr2, extr3,
+        extr4, extr5, extr6, extr7, extr8, extr9, extr10)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.area}, #{entity.type}, #{entity.score}, #{entity.majar}, #{entity.year}, #{entity.rank},
+            #{entity.school}, #{entity.opDate}, #{entity.extr1}, #{entity.extr2}, #{entity.extr3}, #{entity.extr4},
+            #{entity.extr5}, #{entity.extr6}, #{entity.extr7}, #{entity.extr8}, #{entity.extr9}, #{entity.extr10})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into university_rank(`area`, `type`, score, majar, `year`, `rank`, school, op_date, extr1, extr2, extr3,
+        extr4, extr5, extr6, extr7, extr8, extr9, extr10)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.area}, #{entity.type}, #{entity.score}, #{entity.majar}, #{entity.year}, #{entity.rank},
+            #{entity.school}, #{entity.opDate}, #{entity.extr1}, #{entity.extr2}, #{entity.extr3}, #{entity.extr4},
+            #{entity.extr5}, #{entity.extr6}, #{entity.extr7}, #{entity.extr8}, #{entity.extr9}, #{entity.extr10})
+        </foreach>
+        on duplicate key update
+        area = values(area) , type = values(type) , score = values(score) , majar = values(majar) , year = values(year)
+        , rank = values(rank) , school = values(school) , op_date = values(op_date) , extr1 = values(extr1) , extr2 =
+        values(extr2) , extr3 = values(extr3) , extr4 = values(extr4) , extr5 = values(extr5) , extr6 = values(extr6) ,
+        extr7 = values(extr7) , extr8 = values(extr8) , extr9 = values(extr9) , extr10 = values(extr10)
+    </insert>
+
+    <select id="selectAll" resultType="work.hdjava.dyn.entity.UniversityRank">
+        select * from university_rank
+    </select>
+
+</mapper>
+
